@@ -157,6 +157,8 @@ class FilterSet(graphene.InputObjectType):
         # MS SQL
         mssql.BIGINT: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
         mssql.XML: [LIKE],
+        mssql.SMALLINT: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
+        mssql.MONEY: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
     }
 
     ALL = [...]
