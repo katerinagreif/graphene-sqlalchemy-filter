@@ -137,6 +137,8 @@ class FilterSet(graphene.InputObjectType):
         types.Unicode: [EQ, NE, LIKE, ILIKE, REGEXP, IN, NOT_IN],
         types.UnicodeText: [EQ, NE, LIKE, ILIKE, REGEXP, IN, NOT_IN],
         TSVectorType: [EQ, NE, LIKE, ILIKE, REGEXP, IN, NOT_IN],
+        types.VARCHAR: [EQ, NE, LIKE, ILIKE, REGEXP, IN, NOT_IN],
+        types.NVARCHAR: [EQ, NE, LIKE, ILIKE, REGEXP, IN, NOT_IN],
         # Number
         types.Float: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
         types.Numeric: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
@@ -151,6 +153,10 @@ class FilterSet(graphene.InputObjectType):
         postgresql.JSON: [EQ, NE, IN, NOT_IN],
         postgresql.JSONB: [EQ, NE, IN, NOT_IN],
         postgresql.HSTORE: [EQ, NE, IN, NOT_IN],
+        #MSSQL
+        # MS SQL
+        mssql.BIGINT: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
+        mssql.XML: [LIKE],
     }
 
     ALL = [...]
