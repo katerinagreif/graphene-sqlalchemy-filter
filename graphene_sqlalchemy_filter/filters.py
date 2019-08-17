@@ -13,7 +13,7 @@ from graphql import ResolveInfo
 
 # Database
 from sqlalchemy import and_, not_, or_, types
-from sqlalchemy.dialects import postgresql
+from sqlalchemy.dialects import postgresql, mssql
 from sqlalchemy.exc import SAWarning
 from sqlalchemy.orm import aliased
 from sqlalchemy.orm.query import Query
