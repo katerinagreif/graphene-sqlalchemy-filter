@@ -18,7 +18,6 @@ from sqlalchemy.exc import SAWarning
 from sqlalchemy.orm import aliased
 from sqlalchemy.orm.query import Query
 
-
 MYPY = False
 if MYPY:
     from typing import (  # noqa: F401; pragma: no cover
@@ -32,21 +31,17 @@ if MYPY:
         Union,
     )
 
-
 try:
     from sqlalchemy_utils import TSVectorType
 except ImportError:
     TSVectorType = object
 
-
 if MYPY:
     FilterType = Dict[str, Any]  # pragma: no cover
-
 
 DELIMITER = '_'
 RANGE_BEGIN = 'begin'
 RANGE_END = 'end'
-
 
 _range_filter_cache = {}
 
@@ -153,12 +148,13 @@ class FilterSet(graphene.InputObjectType):
         postgresql.JSON: [EQ, NE, IN, NOT_IN],
         postgresql.JSONB: [EQ, NE, IN, NOT_IN],
         postgresql.HSTORE: [EQ, NE, IN, NOT_IN],
-        #MSSQL
         # MS SQL
         mssql.BIGINT: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
         mssql.XML: [LIKE],
         mssql.SMALLINT: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
         mssql.MONEY: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
+        mssql.DATETIME: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
+        mssql.DATETIME2: [EQ, LT, LTE, GT, GTE, NE, IN, NOT_IN, RANGE],
     }
 
     ALL = [...]
@@ -213,7 +209,7 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def __init_subclass_with_meta__(
-        cls, model=None, fields=None, _meta=None, **options
+            cls, model=None, fields=None, _meta=None, **options
     ):
         if model is None and fields:
             raise AttributeError('Model not specified')
@@ -302,13 +298,13 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def aliased(
-        cls,
-        info,
-        element,
-        alias=None,
-        name=None,
-        flat=False,
-        adapt_on_names=False,
+            cls,
+            info,
+            element,
+            alias=None,
+            name=None,
+            flat=False,
+            adapt_on_names=False,
     ):
         """
         Get an alias of the given element.
@@ -336,7 +332,7 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def _generate_default_filters(
-        cls, model, field_filters: 'Dict[str, Union[Iterable[str], Any]]'
+            cls, model, field_filters: 'Dict[str, Union[Iterable[str], Any]]'
     ) -> dict:
         """
         Generate GraphQL fields from SQLAlchemy model columns.
@@ -384,11 +380,11 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def _generate_filter_fields(
-        cls,
-        expressions: 'List[str]',
-        field_name: str,
-        field_type: 'Type[graphene.ObjectType]',
-        nullable: bool,
+            cls,
+            expressions: 'List[str]',
+            field_name: str,
+            field_type: 'Type[graphene.ObjectType]',
+            nullable: bool,
     ) -> 'Dict[str, graphene.ObjectType]':
         """
         Generate all available filters for model column.
@@ -426,7 +422,7 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def filter(
-        cls, info: ResolveInfo, query: Query, filters: 'FilterType'
+            cls, info: ResolveInfo, query: Query, filters: 'FilterType'
     ) -> Query:
         """
         Return a new query instance with the args ANDed to the existing set.
@@ -483,7 +479,7 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def _translate_filter(
-        cls, info: ResolveInfo, query: Query, key: str, value: 'Any'
+            cls, info: ResolveInfo, query: Query, key: str, value: 'Any'
     ) -> 'Tuple[Query, Any]':
         """
         Translate GraphQL to SQLAlchemy filters.
@@ -530,11 +526,11 @@ class FilterSet(graphene.InputObjectType):
 
     @classmethod
     def _translate_many_filter(
-        cls,
-        info: ResolveInfo,
-        query: Query,
-        filters: 'Union[List[FilterType], FilterType]',
-        join_by: 'Callable' = None,
+            cls,
+            info: ResolveInfo,
+            query: Query,
+            filters: 'Union[List[FilterType], FilterType]',
+            join_by: 'Callable' = None,
     ) -> 'Tuple[Query, Any]':
         """
         Translate several filters.
